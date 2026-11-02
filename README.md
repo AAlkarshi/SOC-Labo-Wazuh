@@ -116,7 +116,8 @@ Plusieurs tentatives ont été générées afin de vérifier la capacité de Waz
 
 Wazuh a généré une alerte correspondant à la règle :
 
-<img width="587" height="847" alt="image Alerte Tentative repéré sur Wazuh et ses détails" src="https://github.com/user-attachments/assets/ad687f0e-42ad-4146-9cf6-d434aea7fc79" />
+<img width="587" height="847" alt="Alerte_Detail_Wazuh_Tentative" src="https://github.com/user-attachments/assets/5912df29-d02f-4727-82f6-b2102115f919" />
+
 
 Détails importants :
 
@@ -172,7 +173,8 @@ Le champ `firedtimes` indiquait une valeur de `4`, ce qui signifie que la règle
 
 # 🎯 Mapping MITRE ATT&CK
 
-<img width="587" height="211" alt="Detail MITRE ATTACK" src="https://github.com/user-attachments/assets/afd992b8-536a-4851-973b-8c0b7bbaf8da" />
+<img width="587" height="211" alt="Detail MITRE ATTACK" src="https://github.com/user-attachments/assets/ded42b93-819a-4778-b175-600f1bc90263" />
+
 
 Wazuh a associé l'événement aux techniques suivantes :
 
@@ -208,6 +210,52 @@ L'adresse `127.0.0.1` a permis d'identifier une origine locale.
 Dans le cadre de ce laboratoire, les événements ont été volontairement générés afin de tester la détection et la centralisation des événements par Wazuh.
 
 ---
+
+# 📋 Rapport d'incident SOC
+
+| Élément | Description |
+|---|---|
+| Référence | SOC-TP01-2026-001 |
+| Type d'événement | Authentification SSH échouée |
+| Source de détection | Wazuh SIEM |
+| Règle | 5710 |
+| Gravité Wazuh | 5/15 |
+| Machine concernée | Ubuntu-VM |
+| Adresse source | 127.0.0.1 |
+| Utilisateur | user_inexistant |
+| Statut | Analyse terminée |
+| Classification | Simulation de laboratoire |
+
+## Évaluation de l'incident
+
+**Impact :** aucun accès non autorisé identifié.
+
+**Origine :** tentative générée localement dans le cadre
+d'un exercice contrôlé.
+
+**Résultat :** authentification échouée.
+
+## Actions réalisées
+
+- Identification de l'alerte dans Wazuh.
+- Analyse du journal SSH.
+- Identification de l'adresse IP source.
+- Vérification du compte utilisé.
+- Vérification du contexte de l'événement.
+- Analyse des correspondances MITRE ATT&CK.
+
+## Recommandations
+
+- Surveiller les tentatives répétées d'authentification SSH.
+- Vérifier les journaux d'authentification.
+- Utiliser des clés SSH lorsque cela est adapté.
+- Désactiver l'authentification par mot de passe si
+  la politique de sécurité le permet.
+- Surveiller les connexions SSH provenant de sources inconnues.
+
+## Décision SOC
+
+Événement analysé de plus celle-ci est une simulation contrôlée.
 
 # 📊 Conclusion
 
