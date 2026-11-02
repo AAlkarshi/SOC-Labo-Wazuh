@@ -89,11 +89,9 @@ sudo systemctl start wazuh-agent
 
 ```
 
-L'agent est ensuite apparu dans le tableau de bord Wazuh avec le statut :
+L'agent est ensuite apparu dans le tableau de bord Wazuh avec le statut : **Active**
 
-<img width="1162" height="182" alt="image Wazuh Agents" src="https://github.com/user-attachments/assets/be140466-05df-4df4-9959-479bd7823207" />
-
-**Active**
+<img width="942" height="442" alt="image Wazuh Agents" src="https://github.com/user-attachments/assets/e2101cb6-ccbf-4c59-b812-a2fd8ee009db" />
 
 ---
 
