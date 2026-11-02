@@ -161,13 +161,14 @@ Nov 02 15:10:19 UbuntuUdemy sshd-session[23816]: Failed password for invalid use
 
 L'événement indique une tentative d'authentification SSH utilisant un utilisateur inexistant.
 
-L'authentification a échoué et aucune connexion réussie n'est indiquée dans cet événement.
-
-L'adresse IP source `127.0.0.1` correspond à l'adresse de bouclage (*localhost*). Cela indique que la tentative provient localement de la machine Ubuntu et non d'un système distant.
-
-La règle Wazuh `5710` a identifié cet événement comme une tentative de connexion utilisant un compte inexistant.
+La règle Wazuh `5710` a identifié cet événement comme une tentative de connexion utilisant un compte inexistant et son niveau de gravité est de niveau 5/15(Moyen) avec comme système concerné Ubuntu-VM avec comme L'adresse IP `127.0.0.1` qui correspond à l'adresse de bouclage (localhost). Cela indique donc que cette tentative provient localement de la machine Ubuntu et non d'un système distant. C'est une tentative locale mis au point par mes soins qui cible ici un compte "user_inexistant" qui a eu comme résultat une authentification qui à échouée.
 
 Le champ `firedtimes` indiquait une valeur de `4`, ce qui signifie que la règle avait été déclenchée à 4 reprises pour des événements correspondants.
+
+L'authentification a échoué et aucune connexion réussie n'est indiquée dans cet événement.
+
+<img width="830" height="361" alt="image détail règle 5710" src="https://github.com/user-attachments/assets/e4cb8263-0bbb-4460-b598-f520600b28d1" />
+
 
 ---
 
@@ -205,7 +206,7 @@ Les éléments suivants ont été analysés :
 - Nombre d'occurrences de la règle
 - Contexte de la machine
 
-L'adresse `127.0.0.1` a permis d'identifier une origine locale.
+L'adresse `127.0.0.1` a permis d'identifier une origine locale et qui est mise en place par moi-même.
 
 Dans le cadre de ce laboratoire, les événements ont été volontairement générés afin de tester la détection et la centralisation des événements par Wazuh.
 
