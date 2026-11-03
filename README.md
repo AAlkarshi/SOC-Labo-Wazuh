@@ -1,102 +1,87 @@
 # 🛡️ SOC Lab — Supervision et détection avec Wazuh
 
-Laboratoire personnel de cybersécurité consacré à la supervision des systèmes, à l'analyse des journaux et à la détection d'événements de sécurité avec **Wazuh SIEM**.
+Laboratoire personnel de cybersécurité consacré à la supervision des systèmes, à la détection d'événements de sécurité et à l'analyse d'alertes avec **Wazuh SIEM**.
 
-L'objectif est de développer des compétences pratiques dans le domaine du **SOC (Security Operations Center)** à travers des scénarios de sécurité contrôlés, leur détection et l'analyse des alertes générées.
+Ce projet me permet de mettre en pratique les méthodes et outils utilisés par un analyste SOC, à travers des scénarios de sécurité réalisés dans un environnement contrôlé.
 
-## 🎯 Objectifs du projet
+## 🎯 Objectifs
 
-- Déployer et administrer une plateforme SIEM avec Wazuh.
-- Connecter et superviser des postes Linux et Windows.
-- Collecter et analyser les journaux système et de sécurité.
-- Simuler des événements de sécurité dans un environnement contrôlé.
-- Identifier et analyser les alertes générées par Wazuh.
-- Documenter les investigations et les résultats.
+- Déployer et administrer une plateforme SIEM.
+- Superviser des endpoints Linux et Windows.
+- Centraliser et analyser les journaux système et de sécurité.
+- Détecter des événements suspects à partir des alertes Wazuh.
+- Réaliser le triage et l'investigation des événements.
+- Documenter les résultats et formuler des recommandations.
 
 ## 🏗️ Architecture du laboratoire
 
-Le laboratoire repose sur une infrastructure virtualisée et un poste Windows physique.
+Le laboratoire repose sur un serveur Wazuh, une machine Ubuntu et un poste Windows 11.
 
-| Équipement | Système | Rôle | Adresse IP |
-|---|---|---|---|
-| Serveur Wazuh | Linux | SIEM : Manager, Indexer, Dashboard | `192.168.1.44` |
-| Agent Linux | Ubuntu | Supervision et génération d'événements SSH | `192.168.1.79` |
-| Agent Windows | Windows 11 | Supervision système et collecte Sysmon | `192.168.1.103` |
+| Équipement | Système | Fonction |
+|---|---|---|
+| Serveur Wazuh | Linux | Manager, Indexer et Dashboard |
+| Agent Linux | Ubuntu | Collecte des événements Linux et SSH |
+| Agent Windows | Windows 11 | Collecte des événements Windows et Sysmon |
 
 **Version de Wazuh :** 4.14.9
 
-## 🧰 Technologies utilisées
+Pour plus de détails : [Architecture du laboratoire](./architecture/schema-laboratoire.md).
 
-| Outil | Utilisation |
+## 🧰 Environnement technique
+
+| Technologie | Utilisation |
 |---|---|
-| Wazuh | SIEM, collecte et détection des événements |
-| Wazuh Agent | Supervision des endpoints |
-| Sysmon | Collecte de télémétrie avancée sous Windows |
-| Ubuntu | Système Linux supervisé |
-| Windows 11 | Poste Windows supervisé |
-| VirtualBox | Virtualisation du laboratoire |
-| SSH / OpenSSH | Génération et analyse d'événements d'authentification |
-| Git / GitHub | Versionnement et documentation du projet |
+| Wazuh SIEM | Collecte, supervision et détection |
+| Wazuh Agent | Surveillance des endpoints |
+| Sysmon | Collecte de télémétrie Windows |
+| Ubuntu / Linux | Système supervisé et analyse des journaux |
+| Windows 11 | Endpoint supervisé |
+| OpenSSH | Tests et analyse des authentifications |
+| VirtualBox | Virtualisation |
+| Git / GitHub | Versionnement et documentation |
 
 ## 🔍 Travaux pratiques
 
-Les scénarios sont documentés individuellement. Chaque dossier présente le contexte, la procédure de test, les alertes observées et leur analyse.
+Chaque TP présente un scénario, les manipulations réalisées, les événements collectés, les alertes obtenues et leur analyse.
 
 | TP | Sujet | État |
 |---|---|---|
 | TP01 | Détection d'une authentification SSH échouée | ✅ Réalisé |
 | TP02 | Analyse de tentatives répétées d'authentification SSH | 🔄 En cours |
-| TP03 | Analyse des événements Windows avec Sysmon | À venir |
+| TP03 | Investigation d'événements Windows avec Sysmon | À venir |
 | TP04 | Surveillance de l'intégrité des fichiers (FIM) | À venir |
 | TP05 | Création de règles de détection personnalisées | À venir |
 
-### TP01 — Authentification SSH échouée
+### TP01 — Détection d'une authentification SSH échouée
 
-Détection d'une tentative de connexion SSH avec un utilisateur inexistant.
+Simulation d'une tentative de connexion SSH avec un utilisateur inexistant, puis analyse de l'alerte générée par Wazuh.
 
-- Règle Wazuh : `5710`
-- Niveau d'alerte : `5`
-- Équipement supervisé : Ubuntu
-- Source du test : `127.0.0.1`
+- **Règle :** `5710`
+- **Niveau d'alerte :** `5`
+- **Agent concerné :** Ubuntu-VM
+- **Adresse source :** `127.0.0.1`
 
-➡️ [Consulter le TP01 et son rapport détaillé](./TP01-authentification-ssh/README.md)
+[Consulter le TP01 et son rapport d'investigation](./TP01-authentification-ssh/README.md).
 
-## 🧠 Compétences travaillées
+## 🧠 Compétences mises en pratique
 
-- Administration et supervision d'un environnement Linux.
-- Déploiement et gestion d'agents Wazuh.
-- Collecte et analyse de journaux de sécurité.
-- Analyse d'alertes SIEM.
-- Investigation de tentatives d'authentification suspectes.
-- Utilisation de Sysmon pour la visibilité des événements Windows.
+- Déploiement et administration d'une plateforme Wazuh.
+- Installation et supervision d'agents Linux et Windows.
+- Collecte et analyse de journaux système.
+- Triage et analyse d'alertes SIEM.
+- Investigation de tentatives d'authentification SSH.
+- Exploitation des événements Sysmon.
 - Documentation technique et rédaction de rapports d'incident.
 
-## 📌 Évolution du laboratoire
+## 📈 Évolution du projet
 
-Ce projet évolue progressivement avec de nouveaux scénarios de détection et d'investigation. Les résultats sont documentés au fur et à mesure de leur réalisation.
+Le laboratoire est enrichi progressivement par de nouveaux scénarios de détection, d'investigation et de supervision.
 
----
-
-# 🛠️ Compétences démontrées
-
-- Wazuh SIEM
-- Déploiement d'agents
-- Analyse de logs Linux
-- Analyse des authentifications SSH
-- Triage d'alertes
-- Investigation d'événements
-- Analyse d'adresse IP
-- MITRE ATT&CK
-- Documentation d'incidents
-- Linux & Windows
+Les résultats, captures d'écran et rapports sont conservés dans les dossiers correspondant à chaque TP.
 
 ---
 
-## 📌 Auteur
+**Auteur :** Abdullrahman Al Karshi  
+**Projet personnel — Blue Team / SOC**  
 
-**Abdullrahman Al Karshi**
-
-Junior SOC Analyst — Cybersecurity Lab
-
-
-**Projet personnel réalisé dans un environnement de laboratoire contrôlé, à des fins d'apprentissage et de développement de compétences en cybersécurité défensive (Blue Team / SOC).**
+Laboratoire réalisé dans un environnement contrôlé à des fins d'apprentissage et de développement de compétences en cybersécurité défensive.
