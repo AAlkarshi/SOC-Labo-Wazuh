@@ -36,6 +36,10 @@ La répétition des tentatives sur une courte période constitue un comportement
 
 ## 4. Analyse technique
 
+L'analyse du Dashboard Wazuh a permis d'identifier 18 événements SSH sur une période comprise entre 16:52:01 et 16:52:27, soit environ 26 secondes.
+
+Les événements présentent les caractéristiques suivantes :
+
 - **Adresse IP source :** 192.168.1.103
 - **Adresse IP cible :** 192.168.1.79
 - **Utilisateur ciblé :** `utilisateur_inexistant`
@@ -45,7 +49,9 @@ La répétition des tentatives sur une courte période constitue un comportement
 - **Règle déclenchée :** 5710
 - **Niveau d'alerte :** 5/15
 - **Résultat :** Authentifications échouées.
+- **Nature des événements :** tentatives d'authentification avec un utilisateur inexistant
 
+La répétition de ces événements sur une courte période met en évidence un comportement compatible avec un scénario de tentatives répétées d'authentification SSH.
 Les événements ont été générés depuis le poste Windows 11 à destination du serveur Ubuntu.
 
 La présence de plusieurs alertes rapprochées démontre la capacité de Wazuh à collecter et détecter les tentatives répétées d'authentification SSH.
