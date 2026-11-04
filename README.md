@@ -4,6 +4,8 @@ Laboratoire personnel de cybersécurité consacré à la supervision des systèm
 
 Ce projet me permet de mettre en pratique les méthodes et outils utilisés par un analyste SOC, à travers des scénarios de sécurité réalisés dans un environnement contrôlé.
 
+Glossaire du laboratoire SOC : https://github.com/AAlkarshi/SOC-Labo-Wazuh/blob/main/documentation/GLOSSAIRE.md
+
 ## 🎯 Objectifs
 
 - Déployer et administrer une plateforme SIEM.
