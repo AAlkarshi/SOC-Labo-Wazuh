@@ -30,6 +30,18 @@ L'objectif est d'analyser l'exécution du processus `sdbinst.exe`, associé au m
 
 Wazuh a généré une alerte concernant l'exécution de `sdbinst.exe`
 
+**Détection de l'alerte :**
+
+<img width="1095" height="521" alt="TP3-Alerte-wazuh-regle-92058" src="https://github.com/user-attachments/assets/55512f7d-8282-46a9-8027-7d6dd5b9cdd2" />
+
+
+
+**Informations détaillés :**
+
+<img width="547" height="786" alt="TP3-Detail-Evenement-SYSMON1" src="https://github.com/user-attachments/assets/8a286f9f-09a0-4414-8f7d-c49779bd44bd" />
+
+<img width="527" height="580" alt="TP3-Detail-Evenement-SYSMON2" src="https://github.com/user-attachments/assets/7a86768f-46cd-4e61-82a0-6679eec89a50" />
+
 **Informations de l'alerte :**
 
 | Champ | Valeur |
@@ -43,9 +55,13 @@ Wazuh a généré une alerte concernant l'exécution de `sdbinst.exe`
 | Commande | `C:\Windows\System32\sdbinst.exe -m -bg` |
 | Technique MITRE associée à la règle | T1546.011 — Application Shimming |
 
+
+
 ## 4. Investigation
 
 ### 4.1 Vérification de l'exécutable
+
+<img width="1091" height="617" alt="TP3-VerificationSHAetsignature" src="https://github.com/user-attachments/assets/61d01d47-ba26-465a-ab8f-52f2f9a57099" />
 
 L'exécutable a été vérifié à l'emplacement : `C:\Windows\System32\sdbinst.exe`
 
@@ -75,6 +91,8 @@ Cette empreinte correspond à celle remontée dans l'événement Sysmon transmis
 
 ### 4.3 Analyse du registre Windows
 
+<img width="1097" height="727" alt="TP3-RegistreAnalyse-Installed-sdb" src="https://github.com/user-attachments/assets/8ba9b855-6974-487f-9088-eca8b3910d7c" />
+
 La clé suivante a été examinée :
 
 `HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\InstalledSDB`
@@ -87,6 +105,8 @@ Plusieurs bases de compatibilité ont été recensées, notamment :
 Ces éléments apportent du contexte sur l'utilisation du mécanisme de compatibilité applicative de Windows. Ils ne prouvent pas, à eux seuls, que l'exécution observée était légitime.
 
 ### 4.4 Corrélation des processus Sysmon
+
+<img width="960" height="777" alt="TP3-Sysmon-evenements" src="https://github.com/user-attachments/assets/b20b3eaf-1253-4577-b139-838fb1dab7f4" />
 
 L'analyse des événements Sysmon a permis d'établir la relation suivante :
 
