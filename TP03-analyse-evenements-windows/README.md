@@ -133,7 +133,7 @@ La règle Wazuh associe cet événement à :
 - Nom : Application Shimming
 - Tactiques associées : Persistence et Privilege Escalation.
 
-L'Application Shimming est une fonctionnalité Windows pouvant être détournée à des fins de persistance ou d'exécution de code. Cependant, la présence d'une alerte associée à cette technique ne signifie pas automatiquement qu'une attaque a eu lieu.
+L'Application Shimming est une fonctionnalité Windows pouvant être détournée à des fins de persistance ou d'exécution de code. Cependant, la présence d'une alerte associée à cette technique ne signifie pas automatiquement qu'une attaque a eu lieu. Cette technique permet de détourner des mécanismes de compatibilité applicative pour maintenir une présence ou obtenir des privilèges.
 
 ## 6. Conclusion de l'investigation
 
