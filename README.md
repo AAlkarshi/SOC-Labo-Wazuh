@@ -50,8 +50,8 @@ Chaque TP présente un scénario, les manipulations réalisées, les événement
 |---|---|---|
 | TP01 | Détection d'une authentification SSH échouée | ✅ Réalisé |
 | TP02 | Analyse de tentatives répétées d'authentification SSH | ✅ Réalisé |
-| TP03 | Investigation d'événements Windows avec Sysmon | 🔄 En cours |
-| TP04 | Surveillance de l'intégrité des fichiers (FIM) | À venir |
+| TP03 | Investigation d'événements Windows avec Sysmon | ✅ Réalisé |
+| TP04 | Surveillance de l'intégrité des fichiers (FIM) | 🔄 En cours |
 | TP05 | Création de règles de détection personnalisées | À venir |
 
 ### TP01 — Détection d'une authentification SSH échouée
