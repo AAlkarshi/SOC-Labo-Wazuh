@@ -45,6 +45,8 @@ Exemple de configuration :
 <directories realtime="yes">/etc</directories>
 ```
 
+<img width="618" height="84" alt="TP04-ConfigRealtimeYes" src="https://github.com/user-attachments/assets/d3c4f3b7-898e-42e9-bfca-1f85a2b126d3" />
+
 ## Scénario de test
 
 Création d'un fichier de test dans `/etc` :
@@ -61,9 +63,13 @@ echo "Test de surveillance FIM Wazuh" | sudo tee /etc/test-wazuh-fim.txt
 
 Modification du fichier :
 
+<img 4e1c-95be-1e10b7764e86" />
+
 ```bash
 echo "Deuxieme modification FIM" | sudo tee -a /etc/test-wazuh-fim.txt
 ```
+
+width="422" height="72" alt="TP04-ModificationFichierReussi" src="https://github.com/user-attachments/assets/952d08ff-f82e-
 
 ## Résultat obtenu
 
