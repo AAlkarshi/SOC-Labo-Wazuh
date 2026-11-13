@@ -69,8 +69,6 @@ Modification du fichier :
 echo "Deuxieme modification FIM" | sudo tee -a /etc/test-wazuh-fim.txt
 ```
 
-width="422" height="72" alt="TP04-ModificationFichierReussi" src="https://github.com/user-attachments/assets/952d08ff-f82e-
-
 ## Résultat obtenu
 
 La modification a été détectée par Wazuh et remontée dans Threat Hunting.
