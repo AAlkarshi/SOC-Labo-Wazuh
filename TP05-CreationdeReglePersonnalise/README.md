@@ -13,7 +13,6 @@ Un mécanisme de détection personnalisé, organisé autour de `SOC-Detection-En
 - Windows 11
 - Journaux Windows Security
 - SPL (Search Processing Language)
-- SOC-Detection-Engine
 
 ## 2. Objectifs
 
@@ -40,7 +39,7 @@ L'objectif est de vérifier si le mécanisme de détection personnalisé est cap
 | Description | Échec d'une tentative d'ouverture de session Windows |
 | Journal | Security |
 | Sourcetype | WinEventLog:Security |
-| Index source | ordilocalsystem |
+| Index source | main |
 
 **Principe de détection :**
 
@@ -60,6 +59,11 @@ Cette règle permet de centraliser la détection dans Splunk et de faciliter l'i
 
 J'ai attribué à ma règle un identifiant unique : `DET-WIN-001`.
 
+<img width="700" height="751" alt="TP05_DetailAlerte1" src="https://github.com/user-attachments/assets/e3ec7cb9-830c-4d41-9f6d-d6e846f89222" />
+
+<img width="697" height="612" alt="TP05_DetailAlerte2" src="https://github.com/user-attachments/assets/254f3673-00c4-416a-bd21-b1ba3c3187ac" />
+
+
 Cet identifiant suit une convention de nommage permettant de distinguer les règles de détection personnalisées et de faciliter leur identification dans les recherches, les alertes et les rapports d'investigation.
 
 La règle possède les caractéristiques suivantes :
@@ -73,6 +77,8 @@ La règle possède les caractéristiques suivantes :
 | Sourcetype de sortie | soc:alert:windows |
 | Index de sortie | main |
 
+Cette Identifiant "DET-WIN-001" pour détection Windows numéro 1 afin de représenté ma règle numéro 1.
+
 ### 4.3. Construction de la recherche SPL
 
 La logique de détection repose sur une recherche SPL exploitant les événements Windows 4625.
@@ -80,7 +86,7 @@ La logique de détection repose sur une recherche SPL exploitant les événement
 La recherche permet de regrouper les événements par période et par machine, puis d'analyser le nombre de tentatives échouées.
 
 ```spl
-index=ordilocalsystem sourcetype="WinEventLog:Security" EventCode=4625
+index=ordilocalsystem sourcetype="WinEventLog:Security" 
 | bin _time span=5m
 | stats count as failed_attempts by _time host
 | where failed_attempts >= 5
@@ -95,7 +101,6 @@ index=ordilocalsystem sourcetype="WinEventLog:Security" EventCode=4625
 | Commande | Rôle |
 |---|---|
 | `index=ordilocalsystem` | Sélectionne l'index contenant les événements Windows |
-| `EventCode=4625` | Filtre les échecs d'authentification |
 | `bin _time span=5m` | Regroupe les événements par périodes de cinq minutes |
 | `stats count` | Calcule le nombre d'événements |
 | `where failed_attempts >= 5` | Sélectionne les groupes répondant à la condition de détection |
@@ -183,12 +188,6 @@ Cette recherche permet d'examiner le contenu brut des alertes générées et de 
 **Capture – Recherche de l'alerte personnalisée :**
 
 ![Recherche de l'alerte](screenshots/TP05_DetailAlerteTrouve.png)
-
-**Capture – Détails de l'alerte générée :**
-
-![Détails de l'alerte 1](screenshots/TP05_DetailAlerte1.png)
-
-![Détails de l'alerte 2](screenshots/TP05_DetailAlerte2.png)
 
 ## 7. Analyse des résultats
 
