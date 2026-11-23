@@ -1,37 +1,41 @@
 # TP05 – Rapport d'investigation SOC
-## Détection de tentatives de connexion échouées Windows avec Splunk
+## Création et validation d'une règle de détection Brute Force Windows avec Splunk
 
 | Informations | Détails |
 |---|---|
-| Type d'incident simulé | Tentatives répétées de connexion échouées |
+| Type de scénario | Tentatives répétées de connexion échouées |
 | Catégorie | Authentification / Brute Force |
 | Environnement | Windows 11 |
 | SIEM | Splunk Enterprise |
 | Moteur de détection | SOC-Detection-Engine |
-| Règle | DET-WIN-001 |
+| Identifiant de règle | DET-WIN-001 |
 | Nom de la règle | Détection Brute Force Windows |
-| Niveau de gravité | À confirmer selon la configuration |
-| Statut | Test réalisé – validation technique à documenter |
+| Statut | Simulation réalisée – preuves de détection observées |
 
 ---
 
 ## 1. Contexte de l'investigation
 
-Dans le cadre de ce laboratoire SOC, une simulation de tentatives de connexion échouées a été réalisée sur un poste Windows 11.
+Dans le cadre de ce laboratoire SOC, une règle de détection personnalisée a été conçue afin d'identifier des comportements pouvant correspondre à une attaque par force brute sur un poste Windows 11.
 
-L'objectif était de vérifier le bon fonctionnement d'une règle de détection personnalisée, conçue pour identifier un comportement pouvant correspondre à une attaque par force brute.
+L'objectif est de mettre en pratique les différentes étapes du processus de détection :
 
-Les événements de sécurité Windows ont été collectés dans Splunk afin d'être analysés par le moteur de détection personnalisé `SOC-Detection-Engine`.
+- Identification des événements de sécurité à surveiller.
+- Définition d'une logique de détection.
+- Création et configuration d'une règle personnalisée.
+- Simulation d'un comportement suspect.
+- Vérification de l'exécution de la règle.
+- Analyse des alertes générées dans Splunk.
 
-Cette activité est réalisée dans un environnement de test contrôlé. Les tentatives de connexion ont été volontairement générées pour vérifier le fonctionnement du dispositif de détection.
+L'ensemble des manipulations a été réalisé dans un environnement de test contrôlé. Les tentatives de connexion ont été volontairement générées pour valider le dispositif de détection.
 
 ## 2. Description du scénario
 
-Le scénario consiste à effectuer plusieurs tentatives d'authentification échouées sur le poste Windows.
+Le scénario consiste à réaliser plusieurs tentatives d'authentification échouées sur un poste Windows 11.
 
-Chaque échec d'authentification peut produire un événement de sécurité Windows identifié par le code 4625.
+Chaque échec d'authentification peut générer un événement Windows identifié par le code 4625.
 
-Le moteur de détection analyse les événements collectés afin de rechercher une répétition anormale des échecs d'authentification.
+Une répétition de ces événements sur une période donnée peut révéler un comportement suspect et potentiellement correspondre à une attaque par force brute.
 
 **Événement surveillé :**
 
@@ -43,9 +47,11 @@ Le moteur de détection analyse les événements collectés afin de rechercher u
 | SourceName | Microsoft Windows security auditing |
 | Signification | Échec d'ouverture de session |
 
-## 3. Collecte des événements
+## 3. Collecte et identification des événements
 
-Les événements ont été recherchés dans Splunk avec la requête suivante :
+Avant de créer la règle, il est nécessaire d'identifier les événements disponibles dans Splunk.
+
+La recherche suivante permet de retrouver les tentatives de connexion échouées :
 
 ```spl
 index=ordilocalsystem sourcetype="WinEventLog:Security" EventCode=4625
@@ -53,44 +59,97 @@ index=ordilocalsystem sourcetype="WinEventLog:Security" EventCode=4625
 | sort - _time
 ```
 
-Cette recherche permet d'identifier les événements correspondant aux tentatives de connexion échouées.
-
 ### Observation
 
 Les événements 4625 ont été retrouvés dans Splunk pendant la simulation.
 
-Ils constituent la source de données utilisée pour tester le mécanisme de détection.
+Ils constituent la source de données utilisée pour concevoir et tester la règle de détection.
 
-**Preuve associée :** capture des événements Windows 4625 dans Splunk.
+**Analyse :**
 
-## 4. Règle de détection personnalisée
+L'Event ID 4625 est pertinent pour surveiller les échecs d'authentification. Toutefois, un événement isolé ne suffit pas à caractériser une attaque par force brute.
 
-Une règle de détection portant l'identifiant `DET-WIN-001` a été utilisée dans le moteur `SOC-Detection-Engine`.
+La répétition des échecs et leur fréquence doivent être prises en compte dans la logique de détection.
+
+## 4. Conception et création de la règle personnalisée
+
+### 4.1 Définition du besoin
+
+À partir des événements collectés, le besoin de détection a été défini : identifier une répétition anormale de tentatives de connexion échouées sur le système Windows.
+
+La règle doit permettre de distinguer un simple échec d'authentification d'un comportement pouvant correspondre à une tentative de force brute.
+
+### 4.2 Identification de la règle
+
+Une règle personnalisée a été créée dans le moteur `SOC-Detection-Engine`.
+
+<img width="1272" height="297" alt="TP05_CréationRegleAlerte" src="https://github.com/user-attachments/assets/f69ce8a2-2b9f-4564-94cb-5aed637f9135" />
 
 | Paramètre | Valeur |
 |---|---|
 | Identifiant | DET-WIN-001 |
 | Nom | Détection Brute Force Windows |
-| Source | SOC-Detection-Engine |
-| Type de sortie | soc:alert:windows |
+| Moteur | SOC-Detection-Engine |
+| Événement surveillé | Windows Event ID 4625 |
+| Sourcetype de sortie | soc:alert:windows |
 | Index de destination | main |
 
-L'objectif de cette règle est d'identifier une répétition de tentatives de connexion échouées pouvant indiquer un comportement de force brute.
+### 4.3 Logique de détection
 
-**Point de contrôle :** la condition exacte de déclenchement, le seuil et la fenêtre temporelle doivent être documentés à partir de la configuration réelle de la règle.
+La logique repose sur l'analyse des événements d'échec d'authentification Windows.
 
-## 5. Résultats de la détection
+Le principe consiste à rechercher une répétition des événements 4625 répondant aux conditions définies dans la règle.
 
-Les alertes générées par le moteur personnalisé ont été recherchées dans l'index `main`.
+Les paramètres à documenter à partir de la configuration réelle sont :
 
-Requête SPL :
+| Paramètre | Configuration |
+|---|---|
+| Événement surveillé | Event ID 4625 |
+| Seuil de déclenchement | À renseigner |
+| Fenêtre temporelle | À renseigner |
+| Conditions de regroupement | À renseigner |
+| Identifiant de règle | DET-WIN-001 |
+
+Ces paramètres permettent de définir à partir de quel comportement la règle doit générer une alerte.
+
+### 4.4 Création et configuration
+
+La création de la règle a consisté à :
+
+1. Identifier l'événement Windows à surveiller.
+2. Définir le comportement suspect recherché.
+3. Attribuer un identifiant unique à la règle : `DET-WIN-001`.
+4. Définir son nom : `Détection Brute Force Windows`.
+5. Configurer ses conditions de déclenchement.
+6. Prévoir la génération d'une alerte exploitable dans Splunk.
+
+<img width="700" height="751" alt="TP05_DetailAlerte1" src="https://github.com/user-attachments/assets/a2dbe9b1-1443-4e97-a226-653a5423c0d6" />
+<img width="697" height="612" alt="TP05_DetailAlerte2" src="https://github.com/user-attachments/assets/1fffdd22-ccba-4a2a-a65a-ae4df27ea40d" />
+
+## 5. Simulation des tentatives de connexion
+
+Une simulation de tentatives de connexion échouées a été réalisée sur le poste Windows 11.
+
+Cette étape permet de générer des événements 4625 afin de tester le comportement du mécanisme de détection.
+
+L'objectif est de vérifier que les événements collectés correspondent aux critères définis dans la règle `DET-WIN-001`.
+
+Cette simulation ne constitue pas une attaque réelle : elle est réalisée volontairement dans le cadre du laboratoire.
+
+## 6. Vérification de la détection et des alertes
+
+Les alertes produites par le moteur personnalisé ont été recherchées dans l'index `main`.
+
+**Recherche SPL :**
 
 ```spl
 index=main sourcetype="soc:alert:windows"
 | stats count AS nombre_alertes by host source sourcetype
 ```
 
-### Résultats observés
+### 6.1 Résultats observés
+
+<img width="1145" height="386" alt="TP05_AlerteDetecte" src="https://github.com/user-attachments/assets/ecfac19a-8391-4ca7-a677-7bbefebe3e2f" />
 
 | Champ | Valeur |
 |---|---|
@@ -100,7 +159,11 @@ index=main sourcetype="soc:alert:windows"
 | Sourcetype | soc:alert:windows |
 | Nombre d'événements | 4 |
 
-Une recherche complémentaire a permis de retrouver une alerte portant l'identifiant `DET-WIN-001`.
+Quatre événements correspondant au sourcetype `soc:alert:windows` ont été retrouvés dans l'index.
+
+### 6.2 Recherche de l'alerte personnalisée
+
+Pour retrouver les événements associés à la règle :
 
 ```spl
 index=main sourcetype="soc:alert:windows" "DET-WIN-001"
@@ -108,64 +171,71 @@ index=main sourcetype="soc:alert:windows" "DET-WIN-001"
 | sort - _time
 ```
 
-### Analyse
+<img width="770" height="345" alt="TP05_DetailAlerteTrouve" src="https://github.com/user-attachments/assets/082cb1b2-3968-4d72-b824-c0a3da1438e6" />
 
-La présence de quatre événements dans l'index confirme que des données correspondant au sourcetype `soc:alert:windows` ont été enregistrées.
+Une alerte portant l'identifiant `DET-WIN-001 - Détection Brute Force Windows` a été observée.
 
-La présence de l'identifiant `DET-WIN-001` dans les résultats permet également d'associer une alerte au mécanisme de détection personnalisé.
+### 6.3 Analyse
 
-Cependant, le nombre d'événements indexés ne permet pas à lui seul de déterminer le nombre d'exécutions distinctes de la règle.
+La présence de l'identifiant de la règle dans les événements d'alerte permet d'établir un lien entre le moteur personnalisé et les alertes enregistrées dans Splunk.
 
-## 6. Analyse SOC
+Les quatre événements observés démontrent que des données d'alerte ont été indexées.
 
-L'événement Windows 4625 est un indicateur pertinent pour surveiller les échecs d'authentification.
+Il convient cependant de distinguer le nombre d'événements enregistrés du nombre d'exécutions distinctes de la règle.
 
-Une répétition de ces événements sur une période réduite peut révéler plusieurs situations :
+Pour confirmer précisément son exécution, il faut également rapprocher l'historique du moteur, les événements sources et les horodatages des alertes.
 
-- Tentatives répétées de connexion avec un mot de passe incorrect.
-- Erreur de saisie répétée par un utilisateur légitime.
-- Utilisation d'identifiants obsolètes par une application ou un service.
-- Tentative d'accès non autorisée.
-- Activité potentielle de force brute.
+## 7. Analyse SOC
 
-Dans ce laboratoire, les événements ont été générés volontairement pour tester la détection.
+L'événement Windows 4625 constitue un indicateur intéressant pour surveiller les tentatives d'authentification échouées.
 
-Il ne s'agit donc pas d'un incident de sécurité réel, mais d'un scénario de simulation.
+Plusieurs situations peuvent expliquer leur répétition :
 
-## 7. Vérifications techniques complémentaires
+- Erreurs répétées de saisie de mot de passe.
+- Utilisation d'identifiants obsolètes par une application.
+- Tentatives d'accès non autorisées.
+- Tentative potentielle de force brute.
 
-Les contrôles suivants permettent de renforcer la validation de la règle :
+Dans ce laboratoire, les événements ont été volontairement générés pour tester la règle personnalisée.
 
-| Vérification | Objectif | Statut |
+Aucun incident réel n'est donc revendiqué.
+
+L'alerte doit être interprétée en tenant compte du contexte, de la fréquence des événements et des informations disponibles sur le compte et la machine concernés.
+
+## 8. Vérifications techniques complémentaires
+
+| Vérification | Objectif | Résultat |
 |---|---|---|
 | Collecte des événements 4625 | Vérifier la réception des événements Windows | Observé |
-| Présence de DET-WIN-001 | Identifier l'alerte personnalisée | Observé |
+| Création de DET-WIN-001 | Vérifier l'existence de la règle personnalisée | Observé |
+| Présence de l'identifiant dans les alertes | Associer les alertes à la règle | Observé |
 | Indexation des alertes | Vérifier leur présence dans l'index main | Confirmé |
-| Configuration de la règle | Vérifier le seuil et la fenêtre temporelle | À documenter |
-| Historique d'exécution | Confirmer l'exécution effective de la règle | À documenter |
-| Correspondance temporelle | Relier les événements sources à l'alerte | À vérifier |
-
-## 8. Conclusion de l'investigation
-
-Cette simulation a permis de mettre en pratique la collecte et l'analyse des événements de sécurité Windows dans Splunk Enterprise.
-
-Les événements 4625 ont été identifiés dans l'index de collecte et des événements d'alerte associés au moteur `SOC-Detection-Engine` ont été retrouvés dans l'index `main`.
-
-La présence de l'identifiant `DET-WIN-001` démontre qu'une alerte associée à la règle personnalisée a été produite et indexée.
-
-La validation complète du fonctionnement de la règle nécessite toutefois de vérifier sa configuration, son historique d'exécution et la correspondance entre les événements Windows et l'alerte générée.
-
-Ce TP m'a permis de développer mes compétences en recherche SPL, analyse des journaux Windows, compréhension des mécanismes de détection et exploitation des alertes dans un SIEM.
-
----
+| Seuil et fenêtre temporelle | Vérifier les paramètres réels de détection | À documenter |
+| Historique d'exécution | Confirmer les exécutions de la règle | À vérifier |
+| Correspondance temporelle | Relier les événements sources aux alertes | À vérifier |
 
 ## 9. Éléments de preuve
 
-Captures d'écran à joindre au rapport :
+Les captures suivantes permettent d'illustrer les différentes étapes du TP :
 
-1. `01-collecte-evenements-4625.png` – Événements Windows collectés.
-2. `02-regle-DET-WIN-001.png` – Configuration de la règle personnalisée.
-3. `03-alerte-generee.png` – Alerte DET-WIN-001 retrouvée dans Splunk.
-4. `04-analyse-alertes.png` – Résultat de la recherche statistique des alertes.
+1. `TP05_CréationRegleAlerte.png` – Création et configuration de la règle personnalisée.
+2. `TP05_AlerteDetecte.png` – Détection de l'activité simulée.
+3. `TP05_DetailAlerte1.png` – Détails de la première alerte.
+4. `TP05_DetailAlerte2.png` – Détails complémentaires de l'alerte.
+5. `TP05_DetailAlerteTrouve.png` – Recherche et identification de l'alerte dans Splunk.
+
+## 10. Conclusion de l'investigation
+
+Ce TP a permis de mettre en pratique la conception et la création d'une règle de détection personnalisée dans Splunk Enterprise.
+
+À partir des événements Windows 4625, une logique de détection des tentatives répétées de connexion échouées a été définie et associée à la règle `DET-WIN-001`.
+
+Une simulation a ensuite été réalisée afin de tester le mécanisme de détection.
+
+Les résultats obtenus montrent la présence d'événements d'alerte dans l'index `main`, associés au moteur `SOC-Detection-Engine`, ainsi qu'une alerte identifiée par `DET-WIN-001`.
+
+Cette expérience m'a permis de développer mes compétences en création de règles de détection, exploitation de journaux Windows, recherche SPL et analyse des alertes dans un environnement SIEM.
+
+---
 
 **Fin du rapport d'investigation – TP05**
