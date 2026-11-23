@@ -1,4 +1,4 @@
-# 🛡️ SOC Lab — Supervision et détection avec Wazuh
+# 🛡️ SOC Lab — Supervision et détection avec Wazuh et Splunk
 
 Laboratoire personnel de cybersécurité consacré à la supervision des systèmes, à la collecte des événements de sécurité, à la détection des comportements suspects et à l'investigation d'alertes à l'aide de solutions SIEM telles que **Wazuh** et **Splunk**.
 
@@ -22,7 +22,7 @@ Glossaire du laboratoire SOC : https://github.com/AAlkarshi/SOC-Labo-Wazuh/blob/
 
 ## 🏗️ Architecture du laboratoire
 
-Le laboratoire repose sur un serveur Wazuh, une machine Ubuntu et un poste Windows 11 qui est une architecture centralisée autour de Wazuh. Les agents Wazuh transmettent les événements des machines supervisées au serveur, où ils sont analysés, indexés et consultables depuis le Dashboard.
+Le laboratoire repose sur deux environnements SIEM complémentaires : une infrastructure Wazuh centralisée pour superviser les endpoints Windows et Linux, et une installation locale de Splunk Enterprisesur Windows 11 pour rechercher les événements et créer des règles de détection personnalisées. Les agents Wazuh transmettent les événements des machines supervisées au serveur, où ils sont analysés, indexés et consultables depuis le Dashboard.
 
 Un environnement Splunk Enterprise est également utilisé dans le TP05 pour expérimenter la création de règles de détection personnalisées à partir des journaux Windows.
 
@@ -44,7 +44,7 @@ Pour plus de détails : [Architecture du laboratoire](./architecture/schema-labo
 Le fonctionnement du laboratoire reproduit une chaîne de traitement classique d'un SIEM :
 
 1. Génération : une activité est réalisée sur un endpoint, dans le cadre d'une utilisation normale ou d'un scénario de test.
-2. Collecte : les agents récupèrent les événements système et de sécurité.
+2. Collecte : les agents Wazuh et les mécanismes de collecte Splunk récupèrent les journaux système et de sécurité.
 3. Transmission : les événements sont envoyés à la plateforme SIEM concernée.
 4. Analyse : les événements sont traités à l'aide de décodeurs, de règles et de recherches.
 5. Détection : une alerte est générée lorsqu'une condition de détection est remplie.
@@ -81,7 +81,6 @@ Chaque TP présente un scénario, les manipulations réalisées, les événement
 | TP03 | Investigation d'événements Windows avec Sysmon | ✅ Réalisé |
 | TP04 | Surveillance de l'intégrité des fichiers (FIM) | ✅ Réalisé |
 | TP05 | Création de règles de détection personnalisées avec Splunk | ✅ Réalisé  |
-| TP06 | Bientôt |  🔄 En cours |
 
 ### TP01 — Détection d'une authentification SSH échouée
 
@@ -154,6 +153,7 @@ Mise en place d'une détection personnalisée dans Splunk afin d'identifier les 
 - **Identifiant de détection :** DET-WIN-001
 - **Mécanisme :** SOC-Detection-Engine
 - **MITRE ATT&CK :** T1110 – Brute Force
+  
 **Compétences mises en pratique :** collecte des journaux Windows, recherches SPL, création de règles de détection personnalisées, configuration d'alertes et vérification des événements générés.
 
 [Consulter le TP05 et son rapport d'investigation.](https://github.com/AAlkarshi/SOC-Labo-Wazuh/blob/main/TP05-CreationdeReglePersonnalise/README.md)
