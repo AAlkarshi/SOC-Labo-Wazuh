@@ -1,6 +1,6 @@
 # 🛡️ SOC Lab — Supervision et détection avec Wazuh
 
-Laboratoire personnel de cybersécurité consacré à la supervision des systèmes, à la détection d'événements de sécurité et à l'analyse d'alertes avec **Wazuh SIEM**.
+Laboratoire personnel de cybersécurité consacré à la supervision des systèmes, à la collecte des événements de sécurité, à la détection des comportements suspects et à l'investigation d'alertes à l'aide de solutions SIEM telles que **Wazuh** et **Splunk**.
 
 Ce projet me permet de mettre en pratique les méthodes et outils utilisés par un analyste SOC, à travers des scénarios de sécurité réalisés dans un environnement contrôlé.
 
@@ -22,13 +22,16 @@ Glossaire du laboratoire SOC : https://github.com/AAlkarshi/SOC-Labo-Wazuh/blob/
 
 ## 🏗️ Architecture du laboratoire
 
-Le laboratoire repose sur un serveur Wazuh, une machine Ubuntu et un poste Windows 11 qui est une architecture centralisée autour de Wazuh. Les agents  transmettent leurs événements au serveur, qui les analyse et les rend consultables dans le Dashboard sur Wazuh.
+Le laboratoire repose sur un serveur Wazuh, une machine Ubuntu et un poste Windows 11 qui est une architecture centralisée autour de Wazuh. Les agents Wazuh transmettent les événements des machines supervisées au serveur, où ils sont analysés, indexés et consultables depuis le Dashboard.
+
+Un environnement Splunk Enterprise est également utilisé dans le TP05 pour expérimenter la création de règles de détection personnalisées à partir des journaux Windows.
 
 | Équipement | Système | Fonction |
 |---|---|---|
 | Serveur Wazuh | Linux | Manager, Indexer et Dashboard |
 | Agent Linux | Ubuntu | Collecte des événements Linux et SSH |
 | Agent Windows | Windows 11 | Collecte des événements Windows et Sysmon |
+| Environnement Splunk | Windows 11 | Recherche SPL et création d'alertes personnalisées |
 
 **Version de Wazuh :** 4.14.9
 
@@ -38,13 +41,13 @@ Pour plus de détails : [Architecture du laboratoire](./architecture/schema-labo
 
 Le fonctionnement du laboratoire reproduit une chaîne de traitement classique d'un SIEM :
 
-1. Génération : une activité est réalisée sur un endpoint, volontairement ou dans le cadre d'une utilisation normale.
-2. Collecte : l'agent Wazuh récupère les événements système et de sécurité.
-3. Transmission : les événements sont envoyés au Wazuh Manager.
-4. Analyse : Wazuh utilise ses décodeurs et règles pour identifier les événements correspondant à des comportements particuliers.
-5. Détection : une alerte est générée lorsqu'une règle correspond aux événements collectés.
+1. Génération : une activité est réalisée sur un endpoint, dans le cadre d'une utilisation normale ou d'un scénario de test.
+2. Collecte : les agents récupèrent les événements système et de sécurité.
+3. Transmission : les événements sont envoyés à la plateforme SIEM concernée.
+4. Analyse : les événements sont traités à l'aide de décodeurs, de règles et de recherches.
+5. Détection : une alerte est générée lorsqu'une condition de détection est remplie.
 6. Investigation : l'analyste examine les informations disponibles, le contexte et les indicateurs techniques.
-7. Documentation : les résultats et recommandations sont consignés dans un rapport.
+7. Documentation : les résultats et recommandations sont notés dans un rapport.
 
 ## 🧰 Environnement technique
 
@@ -55,6 +58,7 @@ Le fonctionnement du laboratoire reproduit une chaîne de traitement classique d
 | Wazuh Manager | Analyse et corrélation des événements |
 | Wazuh Indexer | Stockage et indexation |
 | Wazuh Dashboard | Recherche et visualisation des alertes |
+| Splunk Enterprise | Recherche SPL et création d'alertes personnalisées |
 | Sysmon | Collecte de télémétrie Windows |
 | Ubuntu / Linux | Système supervisé et analyse des journaux |
 | Windows 11 | Endpoint supervisé |
@@ -154,12 +158,15 @@ Mise en place d'une détection personnalisée dans Splunk afin d'identifier les 
 
 ## 🧠 Compétences mises en pratique
 
-- Déploiement et administration d'une plateforme Wazuh.
+- Déploiement et administration de solutions SIEM (Wazuh et Splunk).
 - Installation et supervision d'agents Linux et Windows.
-- Collecte et analyse de journaux système.
+- Collecte et analyse de journaux système et de sécurité.
 - Triage et analyse d'alertes SIEM.
-- Investigation de tentatives d'authentification SSH.
-- Exploitation des événements Sysmon.
+- Investigation des tentatives d'authentification échouées (SSH et Windows).
+- Exploitation des événements Windows et Sysmon.
+- Création de règles de détection personnalisées avec SPL.
+- Surveillance de l'intégrité des fichiers (FIM).
+- Utilisation de MITRE ATT&CK pour classifier les techniques d'attaque.
 - Documentation technique et rédaction de rapports d'incident.
 
 ## 📈 Évolution du projet
