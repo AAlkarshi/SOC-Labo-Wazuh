@@ -106,9 +106,9 @@ Une modification d'intégrité a été détectée sur le système Ubuntu-VM par 
 | rule.level | 7/15  | Évaluer le niveau de sévérité
 | rule.mitre.id | T1565.001 | 	Identifier la technique MITRE associée, si renseignée
 | rule.mitre.technique | Stored Data Manipulation | Identifier son intitulé
-| syscheck.path | /etc/testwazuh-fim.txt | Identifier le type de changement détecté
+| syscheck.path | /etc/testwazuh-fim.txt |  Chemin exact du fichier
 | syscheck.event | modified | Identifier le type de changement détecté
-| syscheck.sha256_before | 60423b832fffcee6c48e9119950af6198z7be87cb1f79634ff097742a9afa40 | Empreinte du fichier avant modification
+| syscheck.sha256_before | 60423b832fffcee6c48e9119950af6198z7be87cb1f79634ff097742a9afa40 | Empreinte du fichier AVANT modification
 | syscheck.sha256_after | 422d69390b3fd53be9f2e68beb434790d668d76604f0218c53c58bf48feeebe | Empreinte du fichier après modification
 | timestamp | 10 novembre 2026  18:26:38.926  | Date & Heure observée
 
