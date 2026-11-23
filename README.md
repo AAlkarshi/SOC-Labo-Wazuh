@@ -76,7 +76,7 @@ Simulation de plusieurs tentatives de connexion SSH échouées depuis une machin
 - **Adresse IP source :** 192.168.1.103
 - **MITRE ATT&CK :** T1110 – Brute Force
 
-Consulter le TP02 et son rapport d'investigation.
+[Consulter le TP02 et son rapport d'investigation.](https://github.com/AAlkarshi/SOC-Labo-Wazuh/blob/main/TP02-brute-force-ssh/README.md)
 
 ### TP03 — Investigation d'événements Windows avec Sysmon
 
@@ -90,7 +90,7 @@ Configuration de Sysmon sur Windows 11 et intégration de ses journaux dans Wazu
 - **Événement analysé :** lancement de sdbinst.exe
 - **Investigation :** analyse du processus, vérification de sa signature numérique et examen de la clé de registre InstalledSDB.
 
-Consulter le TP03 et son rapport d'investigation.
+[Consulter le TP03 et son rapport d'investigation.](https://github.com/AAlkarshi/SOC-Labo-Wazuh/blob/main/TP03-analyse-evenements-windows/README.md)
 
 ### TP04 — Surveillance de l'intégrité des fichiers (FIM)
 
@@ -103,7 +103,7 @@ Configuration du module File Integrity Monitoring (FIM) de Wazuh afin de surveil
 - **Mode de surveillance :** analyse périodique et surveillance en temps réel de /etc
 - **Éléments analysés :** création, modification et suppression de fichiers, empreintes SHA-256 avant et après modification.
 
-Consulter le TP04 et son rapport d'investigation.
+[Consulter le TP04 et son rapport d'investigation.](https://github.com/AAlkarshi/SOC-Labo-Wazuh/blob/main/TP04-DetectionModificationsFichiersFIM/README.md)
 
 ## 🧠 Compétences mises en pratique
 
