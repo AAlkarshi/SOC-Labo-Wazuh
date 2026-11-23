@@ -35,6 +35,8 @@ Un environnement Splunk Enterprise est également utilisé dans le TP05 pour exp
 
 **Version de Wazuh :** 4.14.9
 
+**Version de Splunk :** 10.6.1.1
+
 Pour plus de détails : [Architecture du laboratoire](./architecture/schema-laboratoire.md).
 
 ## 🔄 Fonctionnement de la supervision
