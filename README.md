@@ -22,7 +22,7 @@ Glossaire du laboratoire SOC : https://github.com/AAlkarshi/SOC-Labo-Wazuh/blob/
 
 ## 🏗️ Architecture du laboratoire
 
-Le laboratoire repose sur deux environnements SIEM complémentaires : une infrastructure Wazuh centralisée pour superviser les endpoints Windows et Linux, et une installation locale de Splunk Enterprisesur Windows 11 pour rechercher les événements et créer des règles de détection personnalisées. Les agents Wazuh transmettent les événements des machines supervisées au serveur, où ils sont analysés, indexés et consultables depuis le Dashboard.
+Le laboratoire repose sur deux environnements SIEM complémentaires : une infrastructure Wazuh centralisée pour superviser les endpoints Windows et Linux, et une installation locale de Splunk Enterprise sur Windows 11 pour rechercher les événements et créer des règles de détection personnalisées. Les agents Wazuh transmettent les événements des machines supervisées au serveur, où ils sont analysés, indexés et consultables depuis le Dashboard.
 
 Un environnement Splunk Enterprise est également utilisé dans le TP05 pour expérimenter la création de règles de détection personnalisées à partir des journaux Windows.
 
