@@ -74,7 +74,8 @@ Chaque TP présente un scénario, les manipulations réalisées, les événement
 | TP02 | Analyse de tentatives répétées d'authentification SSH | ✅ Réalisé |
 | TP03 | Investigation d'événements Windows avec Sysmon | ✅ Réalisé |
 | TP04 | Surveillance de l'intégrité des fichiers (FIM) | ✅ Réalisé |
-| TP05 | Création de règles de détection personnalisées | 🔄 En cours |
+| TP05 | Création de règles de détection personnalisées avec Splunk | ✅ Réalisé  |
+| TP06 | Bientôt |  🔄 En cours |
 
 ### TP01 — Détection d'une authentification SSH échouée
 
@@ -135,6 +136,21 @@ Configuration du module File Integrity Monitoring (FIM) de Wazuh afin de surveil
 **Compétences mises en pratique :** configuration FIM, analyse des changements de fichiers, comparaison d'empreintes cryptographiques et investigation d'événements d'intégrité.
 
 [Consulter le TP04 et son rapport d'investigation.](https://github.com/AAlkarshi/SOC-Labo-Wazuh/blob/main/TP04-DetectionModificationsFichiersFIM/README.md)
+
+### TP05 — Détection des tentatives de connexion échouées Windows avec Splunk
+
+Mise en place d'une détection personnalisée dans Splunk afin d'identifier les échecs d'authentification Windows et de générer des alertes à partir de l'Event ID 4625.
+
+- **SIEM :** Splunk Enterprise
+- **Source de données :** Windows Security
+- **Événement surveillé :** Event ID 4625
+- **Langage de recherche :** SPL
+- **Identifiant de détection :** DET-WIN-001
+- **Mécanisme :** SOC-Detection-Engine
+- **MITRE ATT&CK :** T1110 – Brute Force
+**Compétences mises en pratique :** collecte des journaux Windows, recherches SPL, création de règles de détection personnalisées, configuration d'alertes et vérification des événements générés.
+
+[Consulter le TP05 et son rapport d'investigation.](https://github.com/AAlkarshi/SOC-Labo-Wazuh/blob/main/TP05-CreationdeReglePersonnalise/README.md)
 
 ## 🧠 Compétences mises en pratique
 
