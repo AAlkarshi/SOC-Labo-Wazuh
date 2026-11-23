@@ -65,6 +65,46 @@ Simulation d'une tentative de connexion SSH avec un utilisateur inexistant, puis
 
 [Consulter le TP01 et son rapport d'investigation](./TP01-authentification-ssh/README.md).
 
+### TP02 — Analyse de tentatives répétées d'authentification SSH
+
+Simulation de plusieurs tentatives de connexion SSH échouées depuis une machine distante, afin d'étudier les événements d'authentification et d'identifier un comportement pouvant correspondre à une attaque par force brute.
+
+- **SIEM :** Wazuh
+- **Règle observée :** 5710
+- **Niveau d'alerte :** 5
+- **Agent concerné :** Ubuntu-VM
+- **Adresse IP source :** 192.168.1.103
+- **MITRE ATT&CK :** T1110 – Brute Force
+
+Consulter le TP02 et son rapport d'investigation.
+
+### TP03 — Investigation d'événements Windows avec Sysmon
+
+Configuration de Sysmon sur Windows 11 et intégration de ses journaux dans Wazuh. Analyse d'un événement lié au lancement de l'utilitaire sdbinst.exe et investigation de son activité.
+
+- **SIEM :** Wazuh
+- **Source de données :** Microsoft-Windows-Sysmon/Operational
+- **Règle observée :** 92058
+- **Niveau d'alerte :** 12
+- **Agent concerné :** Windows 11
+- **Événement analysé :** lancement de sdbinst.exe
+- **Investigation :** analyse du processus, vérification de sa signature numérique et examen de la clé de registre InstalledSDB.
+
+Consulter le TP03 et son rapport d'investigation.
+
+### TP04 — Surveillance de l'intégrité des fichiers (FIM)
+
+Configuration du module File Integrity Monitoring (FIM) de Wazuh afin de surveiller les modifications apportées aux fichiers et répertoires sensibles d'un système Linux.
+
+- **SIEM :** Wazuh
+- **Module :** Syscheck / FIM
+- **Agent concerné :** Ubuntu-VM
+- **Répertoires surveillés :** /etc, /bin, /sbin et /boot
+- **Mode de surveillance :** analyse périodique et surveillance en temps réel de /etc
+- **Éléments analysés :** création, modification et suppression de fichiers, empreintes SHA-256 avant et après modification.
+
+Consulter le TP04 et son rapport d'investigation.
+
 ## 🧠 Compétences mises en pratique
 
 - Déploiement et administration d'une plateforme Wazuh.
