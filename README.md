@@ -8,16 +8,21 @@ Glossaire du laboratoire SOC : https://github.com/AAlkarshi/SOC-Labo-Wazuh/blob/
 
 ## 🎯 Objectifs
 
-- Déployer et administrer une plateforme SIEM.
-- Superviser des endpoints Linux et Windows.
+- Déployer et administrer une infrastructure SIEM avec Wazuh.
+- Connecter et superviser des endpoints Windows et Linux.
 - Centraliser et analyser les journaux système et de sécurité.
 - Détecter des événements suspects à partir des alertes Wazuh.
+- Analyser les événements et leurs champs techniques.
 - Réaliser le triage et l'investigation des événements.
 - Documenter les résultats et formuler des recommandations.
+- Exploiter le framework MITRE ATT&CK.
+- Configurer la surveillance de l'intégrité des fichiers (FIM).
+- Développer et tester des règles de détection personnalisées.
+- Produire des rapports d'investigation structurés.
 
 ## 🏗️ Architecture du laboratoire
 
-Le laboratoire repose sur un serveur Wazuh, une machine Ubuntu et un poste Windows 11.
+Le laboratoire repose sur un serveur Wazuh, une machine Ubuntu et un poste Windows 11 qui est une architecture centralisée autour de Wazuh. Les agents  transmettent leurs événements au serveur, qui les analyse et les rend consultables dans le Dashboard sur Wazuh.
 
 | Équipement | Système | Fonction |
 |---|---|---|
@@ -29,16 +34,33 @@ Le laboratoire repose sur un serveur Wazuh, une machine Ubuntu et un poste Windo
 
 Pour plus de détails : [Architecture du laboratoire](./architecture/schema-laboratoire.md).
 
+## 🔄 Fonctionnement de la supervision
+
+Le fonctionnement du laboratoire reproduit une chaîne de traitement classique d'un SIEM :
+
+1. Génération : une activité est réalisée sur un endpoint, volontairement ou dans le cadre d'une utilisation normale.
+2. Collecte : l'agent Wazuh récupère les événements système et de sécurité.
+3. Transmission : les événements sont envoyés au Wazuh Manager.
+4. Analyse : Wazuh utilise ses décodeurs et règles pour identifier les événements correspondant à des comportements particuliers.
+5. Détection : une alerte est générée lorsqu'une règle correspond aux événements collectés.
+6. Investigation : l'analyste examine les informations disponibles, le contexte et les indicateurs techniques.
+7. Documentation : les résultats et recommandations sont consignés dans un rapport.
+
 ## 🧰 Environnement technique
 
 | Technologie | Utilisation |
 |---|---|
 | Wazuh SIEM | Collecte, supervision et détection |
 | Wazuh Agent | Surveillance des endpoints |
+| Wazuh Manager | Analyse et corrélation des événements |
+| Wazuh Indexer | Stockage et indexation |
+| Wazuh Dashboard | Recherche et visualisation des alertes |
 | Sysmon | Collecte de télémétrie Windows |
 | Ubuntu / Linux | Système supervisé et analyse des journaux |
 | Windows 11 | Endpoint supervisé |
 | OpenSSH | Tests et analyse des authentifications |
+| Syscheck / FIM | Surveillance de l'intégrité des fichiers |
+| MITRE ATT&CK | Classification des techniques d'attaque |
 | VirtualBox | Virtualisation |
 | Git / GitHub | Versionnement et documentation |
 
@@ -62,6 +84,9 @@ Simulation d'une tentative de connexion SSH avec un utilisateur inexistant, puis
 - **Niveau d'alerte :** `5`
 - **Agent concerné :** Ubuntu-VM
 - **Adresse source :** `127.0.0.1`
+- **Catégorie :** authentication_failed, invalid_login, sshd
+
+**Compétences mises en pratique :** analyse des authentifications, identification d'un échec de connexion et lecture des champs d'une alerte.
 
 [Consulter le TP01 et son rapport d'investigation](./TP01-authentification-ssh/README.md).
 
@@ -75,6 +100,8 @@ Simulation de plusieurs tentatives de connexion SSH échouées depuis une machin
 - **Agent concerné :** Ubuntu-VM
 - **Adresse IP source :** 192.168.1.103
 - **MITRE ATT&CK :** T1110 – Brute Force
+
+**Compétences mises en pratique :** analyse de tentatives répétées, identification de l'adresse source et étude des mécanismes de détection par fréquence.
 
 [Consulter le TP02 et son rapport d'investigation.](https://github.com/AAlkarshi/SOC-Labo-Wazuh/blob/main/TP02-brute-force-ssh/README.md)
 
@@ -90,6 +117,8 @@ Configuration de Sysmon sur Windows 11 et intégration de ses journaux dans Wazu
 - **Événement analysé :** lancement de sdbinst.exe
 - **Investigation :** analyse du processus, vérification de sa signature numérique et examen de la clé de registre InstalledSDB.
 
+**Compétences mises en pratique :** analyse de télémétrie Windows, investigation de processus, vérification d'indicateurs techniques et interprétation d'une alerte de niveau élevé.
+
 [Consulter le TP03 et son rapport d'investigation.](https://github.com/AAlkarshi/SOC-Labo-Wazuh/blob/main/TP03-analyse-evenements-windows/README.md)
 
 ### TP04 — Surveillance de l'intégrité des fichiers (FIM)
@@ -102,6 +131,8 @@ Configuration du module File Integrity Monitoring (FIM) de Wazuh afin de surveil
 - **Répertoires surveillés :** /etc, /bin, /sbin et /boot
 - **Mode de surveillance :** analyse périodique et surveillance en temps réel de /etc
 - **Éléments analysés :** création, modification et suppression de fichiers, empreintes SHA-256 avant et après modification.
+
+**Compétences mises en pratique :** configuration FIM, analyse des changements de fichiers, comparaison d'empreintes cryptographiques et investigation d'événements d'intégrité.
 
 [Consulter le TP04 et son rapport d'investigation.](https://github.com/AAlkarshi/SOC-Labo-Wazuh/blob/main/TP04-DetectionModificationsFichiersFIM/README.md)
 
