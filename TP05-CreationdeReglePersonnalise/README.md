@@ -77,7 +77,7 @@ La règle possède les caractéristiques suivantes :
 | Sourcetype de sortie | soc:alert:windows |
 | Index de sortie | main |
 
-Cette Identifiant "DET-WIN-001" pour détection Windows numéro 1 afin de représenté ma règle numéro 1.
+Cet identifiant du nom de "DET-WIN-001" a été choisi afin que je puisse me repérer et donc le reconnaitre, il signifie tout simplement la détection Windows numéro 1 représentant ma règle personnalisable numéro 1.
 
 ### 4.3. Construction de la recherche SPL
 
@@ -86,7 +86,7 @@ La logique de détection repose sur une recherche SPL exploitant les événement
 La recherche permet de regrouper les événements par période et par machine, puis d'analyser le nombre de tentatives échouées.
 
 ```spl
-index=ordilocalsystem sourcetype="WinEventLog:Security" 
+index=ordilocalsystem sourcetype="WinEventLog:Security" EventCode=4625 
 | bin _time span=5m
 | stats count as failed_attempts by _time host
 | where failed_attempts >= 5
